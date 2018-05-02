@@ -1,0 +1,27 @@
+// Test input for checking symbol table handling
+//**************************************************
+
+program P
+  final int  c1 = '3';
+  final char temp='c';
+//----------------| integer constant expected
+  final char cc = 3;
+//----------------| character constant expected
+  class C {
+    int f;
+  }
+  int i;
+  C c, c2;
+  int[] k2;
+  char[] az;
+
+{
+  void foo (int x) {
+    return 3;
+    c1=3*3;
+    temp=az[2];
+    az[u*3]=2;
+
+//---------| void method must not return a value
+  }
+}

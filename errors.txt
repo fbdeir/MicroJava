@@ -1,0 +1,12 @@
+c1 has already been defined at line5
+temp has already been defined at line6
+cc has already been defined at line8
+int is a preloaded at line11
+Wrong return type20
+is final 21
+Types are not equal21
+is final 22
+Types are not equal22
+Types are not equal23
+u is not defined
+Types are not equal23
