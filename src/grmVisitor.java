@@ -70,11 +70,23 @@ public interface grmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBlock(grmParser.BlockContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link grmParser#rcb}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRcb(grmParser.RcbContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link grmParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitStatement(grmParser.StatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link grmParser#ifStatment}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfStatment(grmParser.IfStatmentContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link grmParser#returnStatement}.
 	 * @param ctx the parse tree
@@ -129,6 +141,12 @@ public interface grmVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFactor(grmParser.FactorContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link grmParser#d}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitD(grmParser.DContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link grmParser#designator}.
 	 * @param ctx the parse tree

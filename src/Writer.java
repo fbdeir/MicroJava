@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileWriter;
 
 public class Writer {
@@ -5,7 +6,12 @@ public class Writer {
 
     public Writer(String filename){
         try {
-            this.writer= new FileWriter(filename, true);
+            File f=(new File(filename));
+            if(f.exists()) {
+                f.delete();
+            }
+                this.writer = new FileWriter(filename, true);
+
         }catch(java.io.IOException e){
 
         }finally{
@@ -14,7 +20,7 @@ public class Writer {
 
     public void write(String s){
         try {
-            writer.append(s);
+            writer.append(s+"\n");
             writer.flush();
         }catch(java.io.IOException k){
 

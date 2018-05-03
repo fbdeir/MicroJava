@@ -102,7 +102,7 @@ public class grmLexer extends Lexer {
 	}
 
 
-	boolean lexicalError=false;
+	    boolean lexicalError=false;
 	    public ArrayList<Integer> tracker=new ArrayList<Integer>(){{   add(0);}};;
 	    Writer errors=new Writer("errors.txt");
 	    Writer symbols=new Writer("Symbol Table");
@@ -341,7 +341,19 @@ public class grmLexer extends Lexer {
 	 	           	           					return n;
 
 	 	           	           		   }
+	                public SymbolTableNode checkNode(String name){
+	                 	           	           				   SymbolTableNode n=null;
+	                 	           	           					  // for(Integer temp: set) {
+	                 	           	           						   n = (SymbolTableNode) symbolTable.get(name);
+	                 	           								   try {
+	                 	           									   if (n != null)
+	                 	           										   return n;
+	                 	           								   }catch(NullPointerException e){
+	                 	           								   }
 
+	                 	           	           					return n;
+
+	                 	           	           		   }
 	public void printSymbolTable(){
 	 					Set<Integer> keys=symbolTable.SymbolHashTable().keySet();
 	 	                int line=0;

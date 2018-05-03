@@ -60,6 +60,23 @@ public final class SymbolHashTable extends Hashtable{
                 }
         return null;
     }
+    public static SymbolTableNode get(String nn) {
+        for (int i = 0; i < symbolhashtable.size(); i++) {
+            SymbolTableNode n = (SymbolTableNode) symbolhashtable.get(i);
+            while (n != null) {
+
+                if (n.name.equals(nn)) {
+
+                    return n;
+                }
+
+                n = n.child;
+            }
+            return null;
+
+        }
+        return null;
+    }
 
 
 

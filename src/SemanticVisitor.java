@@ -6,13 +6,15 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.Tree;
 
 import javax.naming.Context;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 
 public class SemanticVisitor extends grmBaseVisitor<Void> {
     grmLexer lexer;
     grmParser parser;
     String type="";
-
     public void setLexer(grmLexer lexer){
         this.lexer=lexer;
     }
@@ -28,21 +30,8 @@ public class SemanticVisitor extends grmBaseVisitor<Void> {
             return "char";
         }
     }
-    @Override
-    public Void visitProg(grmParser.ProgContext ctx) {
 
-        //System.out.println(ctx.getText());
-        return super.visitProg(ctx);
-    }
 
-    @Override
-    public Void visitExpr(grmParser.ExprContext ctx) {
-        int i=0;
-        /*for(ParseTree tree:ctx.children){
-            System.out.println(i+" "+ctx.getChild(i).getText());
-        }*/
-        return super.visitExpr(ctx);
-    }
 
     @Override
     public Void visitDesignator(grmParser.DesignatorContext ctx) {
@@ -60,18 +49,7 @@ public class SemanticVisitor extends grmBaseVisitor<Void> {
 
     @Override
     public Void visitParsTemp(grmParser.ParsTempContext ctx) {
-        int i=0;
-        Boolean book=lexer.checkScope("foo");
-        for(ParseTree tree: ctx.children){
-            if (i>0) break;
-            try {
-                //System.out.println(book);
-                //node.parameters.add(tree.getText());
-            }catch(NullPointerException e){
-                //lexer.printSymbolTable();
-                //System.out.println("empty: "+tree.getText());
-            }
-        }
+
         return super.visitParsTemp(ctx);
     }
 
@@ -80,20 +58,44 @@ public class SemanticVisitor extends grmBaseVisitor<Void> {
        String methodName=ctx.parent.getChild(1).toString();
         SymbolTableNode node=lexer.checkScopeNode(methodName);
         for(ParseTree tree: ctx.children){
-            //System.out.println("curr "+tree.getText());
         }
 
         return super.visitFormPars(ctx);
     }
 
     @Override
-    public Void visitMethodDecl(grmParser.MethodDeclContext ctx) {
-        for(int i=0; i<ctx.getChild(2).getChildCount(); i++){
-         // System.out.println("parr "+ctx.getChild(2).getChild(0).getChild(i));
+    public Void visitMethodDecl(grmParser.MethodDeclContext ctx){
+        for(int y=0; y<ctx.getChild(3).getChildCount(); y++) {
+            for (int i = 0; i < ctx.getChild(3).getChild(y).getChildCount(); i+=2) {
+                SymbolTableNode n=null;
+                Set<Integer> keys=lexer.symbolTable.SymbolHashTable().keySet();
+                for(Integer k: keys){
+                    SymbolTableNode temp= (SymbolTableNode) lexer.symbolTable.SymbolHashTable().get(k);
+                    while(temp!=null){
+                        if(temp.name.equals(ctx.getChild(1).getText())){
+                            n=temp;
+                            break;
+                        }
+                        if(temp.child!=null){
+                            temp=temp.child;
+
+                        }else if(temp.child==null){
+                            break;
+                        }
+                    }
+                }
+                n.parameters.add(ctx.getChild(3).getChild(y).getChild(i).getText());
+                System.out.println(ctx.getChild(1).getText()+" "+ctx.getChild(3).getChild(y).getText()+" "+Arrays.toString(n.parameters.toArray()));
+            }
         }
-        //SymbolTableNode node=lexer.checkScopeNode(methodName);
-        //System.out.println("parr"+ ctx.getChild(3));
+
         return super.visitMethodDecl(ctx);
+    }
+
+
+    @Override
+    public Void visitObject_call(grmParser.Object_callContext ctx) {
+        return super.visitObject_call(ctx);
     }
 
     @Override
@@ -117,13 +119,6 @@ public class SemanticVisitor extends grmBaseVisitor<Void> {
     }
 
 
-    @Override
-    public Void visitArray_call(grmParser.Array_callContext ctx) {
-        //if(ctx.getChildCount()>=2){
-            System.out.println(ctx.getChildCount());
-        //}
-        return super.visitArray_call(ctx);
-    }
 
     @Override
     public Void visitAssignment(grmParser.AssignmentContext ctx) {
@@ -140,7 +135,7 @@ public class SemanticVisitor extends grmBaseVisitor<Void> {
                 lexer.errors.write("is final " + ctx.start.getLine()+"\n");
             }
             try {
-                System.out.println("ass " + ctx.getChild(1).getChild(0).getChild(0).getChild(0).getChild(0).getText());
+                ctx.getChild(1).getChild(0).getChild(0).getChild(0).getChild(0).getText();
             }catch(NullPointerException o){
 
             }
@@ -148,11 +143,6 @@ public class SemanticVisitor extends grmBaseVisitor<Void> {
             lexer.errors.write(ctx.parent.getChild(0).getChild(0).getText()+ "is not defined on line "+ctx.start.getLine());
         }
 
-
-        //ParseTree tree=ctx.getChild(1);
-        /*if(!type.equals(type2)){
-            System.out.println("wrong assignment type");
-        }*/
         int i=0;
 
 
@@ -182,38 +172,47 @@ public class SemanticVisitor extends grmBaseVisitor<Void> {
         return super.visitVarDecl(ctx);
     }
 
+
+
     @Override
     public Void visitTerm(grmParser.TermContext ctx) {
         int i=0;
         for(ParseTree tree:ctx.children){
-            String temptype;
-            temptype=checkType(tree.getText());
-            System.out.println(tree.getText());
-            if(type.equals("")){
-               type=temptype;
-            }
-            if(!temptype.equals(type)){
-                lexer.errors.write("Types are not equal"+ctx.start.getLine()+"\n");
-            }else{
-                type=temptype;
-            }
+            if(!(tree.getText().equals("*")||tree.getText().equals("-")||tree.getText().equals("+")||tree.getText().equals("\\"))) {
+                if(tree.getText().contains("[")){
+                    String temptype=checkType(tree.getText().substring(0,tree.getText().indexOf("[")));
+                    temptype=lexer.checkScopeNode(temptype).type;
 
-            //System.out.println(i+" "+tree.getText());
+
+                    if (type.equals("")) {
+                        type = temptype;
+                    }
+                    if (!temptype.equals(type)) {
+
+                        lexer.errors.write("jj Types are not equal" + ctx.start.getLine() + "\n");
+                    } else {
+                        type = temptype;
+                    }
+                }else {
+                    if(! (parser.ruleNames[ctx.parent.parent.getRuleContext().getRuleIndex()]).equals("ex")) {
+                        String temptype;
+                        temptype = checkType(tree.getText());
+
+                        if (type.equals("")) {
+                            type = temptype;
+                        }
+
+                        if (!temptype.equals(type)) {
+                            lexer.errors.write("Types are not equal" + ctx.start.getLine() + "\n");
+                        } else {
+                            type = temptype;
+                        }
+                    }
+                }
+            }
             i++;
         }
-
-        //System.out.println(ctx.getText()+" type "+type);
         return super.visitTerm(ctx);
 
-    }
-
-    /*@Override
-    public Void visitFactor(grmParser.TermContext ctx){
-
-    }*/
-    @Override
-    public Void visitFactor(grmParser.FactorContext ctx) {
-        //System.out.println(Arrays.toString(ctx.children.toArray()));
-        return super.visitFactor(ctx);
     }
 }

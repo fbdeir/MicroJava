@@ -10,7 +10,7 @@ import java.util.Stack;
 import java.util.Set;
 }
 @lexer:: members{
-boolean lexicalError=false;
+    boolean lexicalError=false;
     public ArrayList<Integer> tracker=new ArrayList<Integer>(){{   add(0);}};;
     Writer errors=new Writer("errors.txt");
     Writer symbols=new Writer("Symbol Table");
@@ -249,7 +249,19 @@ public Boolean checkScope(String name){
  	           	           					return n;
 
  	           	           		   }
+                public SymbolTableNode checkNode(String name){
+                 	           	           				   SymbolTableNode n=null;
+                 	           	           					  // for(Integer temp: set) {
+                 	           	           						   n = (SymbolTableNode) symbolTable.get(name);
+                 	           								   try {
+                 	           									   if (n != null)
+                 	           										   return n;
+                 	           								   }catch(NullPointerException e){
+                 	           								   }
 
+                 	           	           					return n;
+
+                 	           	           		   }
 public void printSymbolTable(){
  					Set<Integer> keys=symbolTable.SymbolHashTable().keySet();
  	                int line=0;
@@ -274,11 +286,18 @@ import java.util.Stack;
 import java.util.Set;
 }
 @parser:: members{
-grmLexer lexer;
-public void setLexer(grmLexer lexer){
+    QuadWriter quads=new QuadWriter();
+    int cCount=1;
+    int iCount=1;
+    int aCount=1;
+    int oCount=1;
+
+    grmLexer lexer;
+    public void setLexer(grmLexer lexer){
 			this.lexer=lexer;
-		}
-        @Override
+	}
+
+    @Override
 		public void enterRule(ParserRuleContext localctx, int state, int ruleIndex) {
             super.enterRule(localctx, state, ruleIndex);
             if(ruleNames[ruleIndex].equals("statement")){
@@ -331,15 +350,18 @@ classDecl: TOK_CLASS  TOK_IDENTIFIER TOK_LCB  (varDecl)* TOK_RCB ;
 methodDecl: (varType| TOK_VOID) TOK_IDENTIFIER TOK_LP (formPars)? TOK_RP (varDecl)* block;
 formPars:  parsTemp (TOK_COMMA parsTemp)*;
 parsTemp:varType TOK_IDENTIFIER;
-block: TOK_LCB  (statement)* TOK_RCB  ;
+block: TOK_LCB  (statement)* rcb ;
+rcb: TOK_RCB;
 statement: assignment
-| TOK_IF TOK_LP  condition TOK_RP (TOK_LCB)? (statement)* (TOK_RCB )? (TOK_ELSE (TOK_LCB)? statement (TOK_RCB)?)*
+| ifStatment
 | TOK_WHILE TOK_LP condition TOK_RP statement
 | returnStatement
 | TOK_READ TOK_LP designator TOK_RP TOK_SEMI
 | TOK_PRINT TOK_LP expr (TOK_COMMA TOK_INTLIT)? TOK_RP TOK_SEMI
 |  block
 | TOK_SEMI;
+ifStatment:TOK_IF TOK_LP  condition TOK_RP (TOK_LCB)? (statement)* (TOK_RCB )? (TOK_ELSE (TOK_LCB)? statement (TOK_RCB)?)*;
+
 returnStatement:TOK_RETURN (expr)? TOK_SEMI;
 assignment:designator (assign_helper|actPars) TOK_SEMI;
 assign_helper:TOK_OP_ASSIGN expr;
@@ -349,11 +371,12 @@ relop: TOK_OP_REL;
 expr: (Minus)? term  (TOK_OP_ADD term)*;
 Minus: '-';
 term: factor (TOK_OP_TIMES factor)*;
-factor: designator (actPars)?
+factor: d
 | TOK_INTLIT
 | TOK_CHARLIT
 | TOK_NEW x
 | TOK_LP expr TOK_RP;
+d: designator (actPars)?;
 designator: TOK_IDENTIFIER (TOK_DOT TOK_IDENTIFIER | TOK_LB ex TOK_RB)*;
 x:TOK_IDENTIFIER (object_call|array_call);
 array_call: (TOK_LB (ex)? TOK_RB)*;
