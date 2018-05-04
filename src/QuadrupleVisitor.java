@@ -5,10 +5,8 @@ import java.util.Set;
 public class QuadrupleVisitor extends grmBaseVisitor<Void> {
     grmLexer lexer;
     grmParser parser;
-    int cCount=1;
-    int iCount=1;
-    int aCount=1;
-    int oCount=1;
+    String _temp_count=(String.format("%04d", 0));
+    String _lbl_count=(String.format("%04d", 0));
     int localCount=0;
     SymbolHashTable symbolTable;
     int tabs=0;
@@ -20,6 +18,19 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
 
     public void setSymbolTable(SymbolHashTable symbolHashTable) {
         this.symbolTable = symbolHashTable;
+    }
+    public void incrementTemp(){
+        int temp=Integer.parseInt(_temp_count);
+        temp++;
+        _temp_count=String.format("%04d", temp);
+
+
+    }
+
+    public void incrementLablel(){
+        int temp=Integer.parseInt(_lbl_count);
+        temp++;
+        _lbl_count=String.format("%04d", temp);
     }
 
     public  void setParser(grmParser l){
@@ -71,28 +82,44 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
         return super.visitMethodDecl(ctx);
     }
 
-//    @Override
-//    public Void visitIfStatment(grmParser.IfStatmentContext ctx) {
-//        String op=ctx.getChild(2).getChild(1).getText();
-//        String op1=ctx.getChild(2).getChild(0).getText();
-//        String op2=ctx.getChild(2).getChild(2).getText();
-//        if(op.equals("==")){
-//            System.out.println("NEQI i"+iCount+" "+op1+" "+op2);
-//        }
-//        return super.visitIfStatment(ctx);
-//    }
-
-
     @Override
-    public Void visitCondition(grmParser.ConditionContext ctx) {
-        String op1=ctx.getChild(0).getText();
-        String op2=ctx.getChild(2).getText();
-        String op=ctx.getChild(1).getText();
+    public Void visitIfStatment(grmParser.IfStatmentContext ctx) {
+        String op=ctx.getChild(2).getChild(1).getText();
+        String op1=ctx.getChild(2).getChild(0).getText();
+        String op2=ctx.getChild(2).getChild(2).getText();
         if(op.equals("==")){
-            System.out.println("NEQI i"+iCount+" "+op1+" "+op2);
+           // System.out.println("NEQI _temp_"+_temp_count +" "+op1+" "+op2);
+            int i=ctx.parent.parent.getChild(1).getChild(0).getChildCount();
+                while(!(ctx.parent.parent.getChild(1).getChild(0).getChild(i-1).getText().substring(0,5)).equals("else")){
+                    i--;
+                }
+                if(i>=0){
+                    System.out.println("ELSELABEL _lbl_"+_lbl_count);
+                    quads.tabs++;
+                }
+                else if(i<0){
+                    //there is no else statement
+                }
+                System.out.println();
+
+            incrementTemp();
         }
-        return super.visitCondition(ctx);
+        return super.visitIfStatment(ctx);
     }
+
+
+//    @Override
+//    public Void visitCondition(grmParser.ConditionContext ctx) {
+//        String op1=ctx.getChild(0).getText();
+//        String op2=ctx.getChild(2).getText();
+//        String op=ctx.getChild(1).getText();
+//        if(op.equals("==")){
+//            quads.write("NEQI _temp_"+_temp_count+" "+op1+" "+op2);
+//            System.out.println(ctx.parent.parent.parent.getChild(2).getText());
+//            incrementTemp();
+//        }
+//        return super.visitCondition(ctx);
+//    }
 
     @Override
     public Void visitRcb(grmParser.RcbContext ctx) {
@@ -112,9 +139,9 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
     @Override
     public Void visitStatement(grmParser.StatementContext ctx) {
         if(ctx.getChild(0).getText().equals("print")){
-            Quadruple load=new Quadruple("LDC", "c"+cCount,  ctx.getChild(2).getText(), "");
-            Quadruple q=new Quadruple("print", "c"+cCount,"","");
-            cCount++;
+            Quadruple load=new Quadruple("LDC", "_temp_"+_temp_count,  ctx.getChild(2).getText(), "");
+            Quadruple q=new Quadruple("print", "_temp_"+_temp_count,"","");
+            incrementTemp();
             quads.write(load.toString());
             quads.write(q.toString());
         }

@@ -133,6 +133,26 @@ public interface grmListener extends ParseTreeListener {
 	 */
 	void exitIfStatment(grmParser.IfStatmentContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link grmParser#elseStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterElseStatement(grmParser.ElseStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link grmParser#elseStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitElseStatement(grmParser.ElseStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link grmParser#whileStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhileStatement(grmParser.WhileStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link grmParser#whileStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhileStatement(grmParser.WhileStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link grmParser#returnStatement}.
 	 * @param ctx the parse tree
 	 */

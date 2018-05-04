@@ -354,13 +354,15 @@ block: TOK_LCB  (statement)* rcb ;
 rcb: TOK_RCB;
 statement: assignment
 | ifStatment
-| TOK_WHILE TOK_LP condition TOK_RP statement
+| whileStatement
 | returnStatement
 | TOK_READ TOK_LP designator TOK_RP TOK_SEMI
 | TOK_PRINT TOK_LP expr (TOK_COMMA TOK_INTLIT)? TOK_RP TOK_SEMI
 |  block
 | TOK_SEMI;
-ifStatment:TOK_IF TOK_LP  condition TOK_RP (TOK_LCB)? (statement)* (TOK_RCB )? (TOK_ELSE (TOK_LCB)? statement (TOK_RCB)?)*;
+ifStatment:TOK_IF TOK_LP  condition TOK_RP (TOK_LCB)? (statement)* (TOK_RCB )? elseStatement*;
+elseStatement:TOK_ELSE (TOK_LCB)? statement (TOK_RCB)?;
+whileStatement:TOK_WHILE TOK_LP condition TOK_RP statement;
 
 returnStatement:TOK_RETURN (expr)? TOK_SEMI;
 assignment:designator (assign_helper|actPars) TOK_SEMI;

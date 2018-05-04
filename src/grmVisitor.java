@@ -88,6 +88,18 @@ public interface grmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIfStatment(grmParser.IfStatmentContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link grmParser#elseStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitElseStatement(grmParser.ElseStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link grmParser#whileStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhileStatement(grmParser.WhileStatementContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link grmParser#returnStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

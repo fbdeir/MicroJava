@@ -8,6 +8,7 @@ public class SymbolTableNode {
     public int isFinal;
     public SymbolTableNode child;
     public int isArray;
+    public String tempType="";
     public ArrayList<String> parameters=new ArrayList<>();
     public SymbolTableNode(String name, String type, String structure, int isFinal, int scope, int isArray){
         this.name=name;
@@ -18,6 +19,7 @@ public class SymbolTableNode {
         this.child=null;
         this.parameters=new ArrayList<>();
         this.isArray=isArray;
+
     }
     public SymbolTableNode(String name, String type, String structure, int isFinal, int scope){
         this.name=name;
