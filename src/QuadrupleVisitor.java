@@ -102,7 +102,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             mainLabel=n.tempType;
         }
         incrementLablel();
-        quads.write(n.tempType+" "+ctx.getChild(1).getText());
+        quads.write(n.tempType+" ");
         quads.tabs++;
 
         return super.visitMethodDecl(ctx);
@@ -119,7 +119,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
         String op=ctx.getChild(2).getChild(1).getText();
         String op1=ctx.getChild(2).getChild(0).getText();
         String op2=ctx.getChild(2).getChild(2).getText();
-        quads.write("_lbl_"+_lbl_count+ " while");
+        quads.write("_lbl_"+_lbl_count);
         whilelbl.push(_lbl_count);
         incrementLablel();
         if(op.equals("==")){
@@ -258,21 +258,21 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
     @Override
     public Void visitEndif(grmParser.EndifContext ctx) {
         try {
-//            String temp=(ctx.parent.parent.getChild(1).getText());
-//            quads.write("j _lbl_"+_lbl_count);
-//            fallthroughlbl=_lbl_count;
-//            incrementLablel();
+            String temp=(ctx.parent.parent.getChild(1).getText());
+            quads.write("j _lbl_"+_lbl_count);
+            fallthroughlbl=_lbl_count;
+            incrementLablel();
         }catch(NullPointerException e){
             //there is no else
         }
 
-        quads.write("_lbl_"+elselbl+" else");
+        quads.write("_lbl_"+elselbl);
         return super.visitEndif(ctx);
     }
 
     @Override
     public Void visitEndElse(grmParser.EndElseContext ctx) {
-            quads.write("_lbl_"+fallthroughlbl+" fall");
+            quads.write("_lbl_"+fallthroughlbl);
             incrementLablel();
 
         return super.visitEndElse(ctx);
@@ -299,13 +299,15 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
     @Override
     public Void visitPrintStatement(grmParser.PrintStatementContext ctx) {
         String s=ctx.getChild(2).getText();
-        String temp="_temp_";
+        String temp="";
         if(checkType(s).equals("int")||checkType(s).equals("char")){
             temp=s+" intchar";
         }else if(checkType(s).equals("variable")){
             String num=getTemp(s);
             temp+=num+" var";
         }
+        System.out.println(ctx.getChild(2).getText()+"\t"+temp);
+        if(!temp.equals("_temp_"))
         quads.write("lb $v0 "+temp);
         incrementTemp();
         quads.write("syscall");
@@ -375,6 +377,35 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             quads.tabs--;
 
         return super.visitVarDecl(ctx);
+    }
+
+    @Override
+    public Void visitParsTemp(grmParser.ParsTempContext ctx) {
+        localCount++;
+        String tt=ctx.getText();
+        SymbolTableNode n=null;
+        Set<Integer> keys=symbolTable.SymbolHashTable().keySet();
+        for(Integer i: keys){
+            SymbolTableNode temp= (SymbolTableNode) symbolTable.SymbolHashTable().get(i);
+            while(temp!=null){
+                if(temp.name.equals(ctx.getChild(1).getText())){
+                    n=temp;
+                    n.tempType="_temp_"+_temp_count;
+                    incrementTemp();
+                    break;
+                }
+                if(temp.child!=null){
+                    temp=temp.child;
+
+                }else if(temp.child==null){
+                    break;
+                }
+            }
+        }
+        localCount = 0;
+        if(quads.tabs>0)
+            quads.tabs--;
+        return super.visitParsTemp(ctx);
     }
 
     @Override
