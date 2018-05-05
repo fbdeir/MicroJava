@@ -9,6 +9,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
     grmLexer lexer;
     grmParser parser;
     String _temp_count=(String.format("%04d", 0));
+    int tempct=0;
     String _lbl_count=(String.format("%04d", 0));
     int localCount=0;
     SymbolHashTable symbolTable;
@@ -32,8 +33,8 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
         int temp=Integer.parseInt(_temp_count);
         temp++;
         _temp_count=String.format("%04d", temp);
-
-
+        tempct++;
+        System.out.println(tempct);
     }
 
     public void incrementLablel(){
@@ -77,30 +78,30 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
 
         SymbolTableNode n=null;
 
-         Set<Integer> keys=symbolTable.SymbolHashTable().keySet();
-            for(Integer i: keys){
-                SymbolTableNode temp= (SymbolTableNode) symbolTable.SymbolHashTable().get(i);
-                while(temp!=null){
-                    if(temp.name.equals(ctx.getChild(1).getText())){
-                        n=temp;
-                        break;
-                    }
-                    if(temp.child!=null){
-                        temp=temp.child;
+        Set<Integer> keys=symbolTable.SymbolHashTable().keySet();
+        for(Integer i: keys){
+            SymbolTableNode temp= (SymbolTableNode) symbolTable.SymbolHashTable().get(i);
+            while(temp!=null){
+                if(temp.name.equals(ctx.getChild(1).getText())){
+                    n=temp;
+                    break;
+                }
+                if(temp.child!=null){
+                    temp=temp.child;
 
-                    }else if(temp.child==null){
-                        break;
-                    }
+                }else if(temp.child==null){
+                    break;
                 }
             }
-
-            n.paramBegin=_temp_count;
-            createVariables(n.parameters);
-            n.paramEnd=_temp_count;
-            n.tempType="_lbl_"+_lbl_count;
-        if(n.name.equals("main")){
-            mainLabel=n.tempType;
         }
+
+        n.paramBegin=tempct;
+        n.paramEnd=tempct;
+        if(n.name.equals("main")){
+            n.tempType="main";
+        }else             n.tempType="lbl_"+_lbl_count;
+
+
         incrementLablel();
         quads.write(n.tempType+" ");
         quads.tabs++;
@@ -119,66 +120,39 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
         String op=ctx.getChild(2).getChild(1).getText();
         String op1=ctx.getChild(2).getChild(0).getText();
         String op2=ctx.getChild(2).getChild(2).getText();
-        quads.write("_lbl_"+_lbl_count);
+        quads.write("lbl_"+_lbl_count);
         whilelbl.push(_lbl_count);
         incrementLablel();
         if(op.equals("==")){
             isEquals=1;
             String middle=getTemp(op1);
-            quads.write("lb "+middle+" "+op1);
-            op1="_temp_"+_temp_count;
+            quads.write("lb "+middle+", "+op1);
+            op1="$t"+tempct;
             incrementTemp();
             String middle2=getTemp(op2);
-            quads.write("lb "+middle2+" "+op2);
-            op2="_temp_"+_temp_count;
+            if(!checkType(middle2).equals("char") && !checkType(middle2).equals("int"))
+                quads.write("lb "+middle2+", "+op2);
+            op2="$t"+tempct;
             incrementTemp();
-            quads.write("beq "+middle+ " "+middle2+" "+"_lbl_"+whilelbl.peek());
+            quads.write("beq "+middle+ " "+middle2+" "+"lbl_"+whilelbl.peek());
             elselbl=_lbl_count;
 
             incrementLablel();
         }else if(op.equals("<=")){
             isEquals=1;
             String middle=getTemp(op1);
-            quads.write("lb "+middle+" "+op1);
-            op1="_temp_"+_temp_count;
+            quads.write("lb "+middle+", "+op1);
+            op1="$t"+tempct;
             incrementTemp();
             String middle2=getTemp(op2);
-            quads.write("lb "+middle2+" "+op2);
-            op2="_temp_"+_temp_count;
+            quads.write("lb "+middle2+", "+op2);
+            op2="$t"+tempct;
             incrementTemp();
-            quads.write("ble "+middle+ " "+middle2+" "+"_lbl_"+whilelbl.peek());
+            quads.write("ble "+middle+ " "+middle2+" "+"lbl_"+whilelbl.peek());
             elselbl=_lbl_count;
             incrementLablel();
         }
         return super.visitWhileStatement(ctx);
-    }
-
-    public void createVariables(ArrayList<String> list){
-        int size=list.size();
-        for(int z=0; z<size; z++){
-            quads.write("lb _temp_"+_temp_count+" $zero ");
-            SymbolTableNode n=null;
-            Set<Integer> keys=symbolTable.SymbolHashTable().keySet();
-            for(Integer i: keys){
-                SymbolTableNode temp= (SymbolTableNode) symbolTable.SymbolHashTable().get(i);
-                while(temp!=null){
-                    if(temp.name.equals(list.get(z))){
-                        n=temp;
-                        n.tempType="_temp_"+_temp_count;
-                        incrementTemp();
-                        break;
-                    }
-                    if(temp.child!=null){
-                        temp=temp.child;
-
-                    }else if(temp.child==null){
-                        break;
-                    }
-                }
-            }
-
-            incrementTemp();
-        }
     }
 
     @Override
@@ -194,36 +168,36 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
         if(op.equals("==")){
             isEquals=1;
             String middle=getTemp(op1);
-            quads.write("lb "+middle+" "+op1);
-            op1="_temp_"+_temp_count;
+            quads.write("lb "+middle+", "+op1);
+            op1="$t"+tempct;
             incrementTemp();
             String middle2=getTemp(op2);
-            quads.write("lb "+middle2+" "+op2);
-            op2="_temp_"+_temp_count;
+            quads.write("lb "+middle2+", "+op2);
+            op2="$t"+tempct;
             incrementTemp();
-            quads.write("bneq "+middle+ " "+middle2+" "+"_lbl_"+_lbl_count);
+            quads.write("bneq "+middle+ " "+middle2+" "+"lbl_"+_lbl_count);
             elselbl=_lbl_count;
             incrementLablel();
         }else if(op.equals("<=")){
             String middle=getTemp(op1);
-            quads.write("lb "+middle+" "+op1);
-            op1="_temp_"+_temp_count;
+            quads.write("lb "+middle+", "+op1);
+            op1="$t"+tempct;
             incrementTemp();
             String middle2=getTemp(op2);
-            quads.write("lb "+middle2+" "+op2);
-            op2="_temp_"+_temp_count;
+            quads.write("lb "+middle2+", "+op2);
+            op2="$t"+tempct;
             incrementTemp();
-            quads.write("ble "+middle+" "+middle2+" _lbl_"+_lbl_count);
+            quads.write("ble "+middle+" "+middle2+"lbl_"+_lbl_count);
             elselbl=_lbl_count;
             incrementLablel();
         }else if(op.equals(">")){
             String middle=getTemp(op1);
-            quads.write("lb "+middle+" "+op1);
-            op1="_temp_"+_temp_count;
+            quads.write("lb "+middle+", "+op1);
+            op1="$t"+tempct;
             incrementTemp();
             String middle2=getTemp(op2);
-            quads.write("lb "+middle2+" "+op2);
-            op2="_temp_"+_temp_count;
+            quads.write("lb "+middle2+", "+op2);
+            op2="$t"+tempct;
             incrementTemp();
             quads.write("blt "+op1+" "+op2+" _lbl_"+_lbl_count);
             elselbl=_lbl_count;
@@ -259,21 +233,21 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
     public Void visitEndif(grmParser.EndifContext ctx) {
         try {
             String temp=(ctx.parent.parent.getChild(1).getText());
-            quads.write("j _lbl_"+_lbl_count);
+            quads.write("j lbl_"+_lbl_count);
             fallthroughlbl=_lbl_count;
             incrementLablel();
         }catch(NullPointerException e){
             //there is no else
         }
 
-        quads.write("_lbl_"+elselbl);
+        quads.write("lbl_"+elselbl);
         return super.visitEndif(ctx);
     }
 
     @Override
     public Void visitEndElse(grmParser.EndElseContext ctx) {
-            quads.write("_lbl_"+fallthroughlbl);
-            incrementLablel();
+        quads.write("lbl_"+fallthroughlbl);
+        incrementLablel();
 
         return super.visitEndElse(ctx);
     }
@@ -306,10 +280,8 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             String num=getTemp(s);
             temp+=num+" var";
         }
-        System.out.println(ctx.getChild(2).getText()+"\t"+temp);
-        if(!temp.equals("_temp_"))
-        quads.write("lb $v0 "+temp);
-        incrementTemp();
+        if(!temp.equals(""))
+            quads.write("lb $v0, "+temp);
         quads.write("syscall");
         return super.visitPrintStatement(ctx);
     }
@@ -317,9 +289,9 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
     @Override
     public Void visitStatement(grmParser.StatementContext ctx) {
         if(endIf==1){
-            quads.write("j _lbl_"+_lbl_count);
+            quads.write("j lbl_"+_lbl_count);
             fallthroughlbl=_lbl_count;
-            quads.write("_lbl_"+elselbl);
+            quads.write("lbl_"+elselbl);
             endIf=0;
         }
         if(parser.ruleNames[ctx.parent.getRuleIndex()].equals("ifStatment")){
@@ -360,7 +332,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             while(temp!=null){
                 if(temp.name.equals(ctx.getChild(1).getText())){
                     n=temp;
-                    n.tempType="_temp_"+_temp_count;
+                    n.tempType="$t"+tempct;
                     incrementTemp();
                     break;
                 }
@@ -390,7 +362,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             while(temp!=null){
                 if(temp.name.equals(ctx.getChild(1).getText())){
                     n=temp;
-                    n.tempType="_temp_"+_temp_count;
+                    n.tempType="$t"+tempct;
                     incrementTemp();
                     break;
                 }

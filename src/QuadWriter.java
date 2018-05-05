@@ -1,5 +1,7 @@
+import java.util.Scanner;
+
 public class QuadWriter {
-    private static Writer quads= new Writer("quads.txt");
+    private static Writer quads= new Writer("mips.txt");
     public static int tabs=0;
     public static String waitString;
     public static Writer QuadWriter(){
@@ -21,4 +23,6 @@ public class QuadWriter {
     public static void drop(){
         quads.write(waitString);
     }
+
+
 }

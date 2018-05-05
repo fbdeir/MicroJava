@@ -9,8 +9,8 @@ public class SymbolTableNode {
     public SymbolTableNode child;
     public int isArray;
     public String tempType="";
-    public String paramBegin="";
-    public String paramEnd="";
+    public int paramBegin=0;
+    public int paramEnd=0;
     public ArrayList<String> parameters=new ArrayList<>();
     public SymbolTableNode(String name, String type, String structure, int isFinal, int scope, int isArray){
         this.name=name;
