@@ -7,7 +7,7 @@ program Test2
 {
 	void put(int x)
 	{
-		if (npp == 10) {print(chr(13)); print(chr(10)); npp = 0;}
+		if (npp == 10 ) {print(chr(13)); print(chr(10)); npp = 0;}else {print(1);}
 		print(x, 5);
 		npp = npp + 1;
 	}
@@ -33,9 +33,9 @@ program Test2
 			found(i);
 			ready = 0;
 			while(ready == 0) {
-				if (i > max) ready = 1;
-				else if (sieve[i] == 'x') ready = 1;
-				else i = i + 1;
+				if (i > max) {print(2);}
+				else if (sieve[i] == 'x') print('n');
+				else {print('h');}
 			}
 		}
 	}

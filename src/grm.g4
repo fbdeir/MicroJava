@@ -342,7 +342,8 @@ TOK_PROGRAM: 'program';
 
 //Rules
 program: prog;
-prog: TOK_PROGRAM   TOK_IDENTIFIER   (constDecl|varDecl|classDecl)*  TOK_LCB (methodDecl)* TOK_RCB EOF;
+prog: TOK_PROGRAM   TOK_IDENTIFIER   (constDecl|varDecl|classDecl)*  TOK_LCB (methodDecl)* rcb eof;
+eof: EOF;
 constDecl: TOK_FINAL varType    TOK_IDENTIFIER  TOK_OP_ASSIGN (TOK_INTLIT|TOK_CHARLIT) TOK_SEMI;
 varDecl:  varType TOK_IDENTIFIER  (TOK_COMMA   TOK_IDENTIFIER )* TOK_SEMI;
 
@@ -353,15 +354,18 @@ parsTemp:varType TOK_IDENTIFIER;
 block: TOK_LCB  (statement)* rcb ;
 rcb: TOK_RCB;
 statement: assignment
-| ifStatment
+| ifStatment elseStatement*
 | whileStatement
 | returnStatement
 | TOK_READ TOK_LP designator TOK_RP TOK_SEMI
-| TOK_PRINT TOK_LP expr (TOK_COMMA TOK_INTLIT)? TOK_RP TOK_SEMI
+| printStatement
 |  block
 | TOK_SEMI;
-ifStatment:TOK_IF TOK_LP  condition TOK_RP (TOK_LCB)? (statement)* (TOK_RCB )? elseStatement*;
-elseStatement:TOK_ELSE (TOK_LCB)? statement (TOK_RCB)?;
+printStatement: TOK_PRINT TOK_LP expr (TOK_COMMA TOK_INTLIT)? TOK_RP TOK_SEMI;
+ifStatment:TOK_IF TOK_LP  condition TOK_RP (TOK_LCB)? (statement)* endif? ;
+endif: TOK_RCB;
+elseStatement:TOK_ELSE (TOK_LCB)? statement endElse?;
+endElse: TOK_RCB;
 whileStatement:TOK_WHILE TOK_LP condition TOK_RP statement;
 
 returnStatement:TOK_RETURN (expr)? TOK_SEMI;

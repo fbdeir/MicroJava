@@ -67,15 +67,11 @@ Types are not equal36
 
 Types are not equal36
 
-ready is not defined
-
-readyis not defined on line 36
 jj Types are not equal37
 
 Types are not equal37
 
-ready is not defined
+Types are not equal37
 
-readyis not defined on line 37
 Types are not equal38
 

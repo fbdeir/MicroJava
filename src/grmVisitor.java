@@ -28,6 +28,12 @@ public interface grmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProg(grmParser.ProgContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link grmParser#eof}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEof(grmParser.EofContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link grmParser#constDecl}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -82,17 +88,35 @@ public interface grmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(grmParser.StatementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link grmParser#printStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrintStatement(grmParser.PrintStatementContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link grmParser#ifStatment}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitIfStatment(grmParser.IfStatmentContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link grmParser#endif}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEndif(grmParser.EndifContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link grmParser#elseStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitElseStatement(grmParser.ElseStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link grmParser#endElse}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEndElse(grmParser.EndElseContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link grmParser#whileStatement}.
 	 * @param ctx the parse tree

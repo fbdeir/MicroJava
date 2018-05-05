@@ -33,6 +33,16 @@ public interface grmListener extends ParseTreeListener {
 	 */
 	void exitProg(grmParser.ProgContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link grmParser#eof}.
+	 * @param ctx the parse tree
+	 */
+	void enterEof(grmParser.EofContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link grmParser#eof}.
+	 * @param ctx the parse tree
+	 */
+	void exitEof(grmParser.EofContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link grmParser#constDecl}.
 	 * @param ctx the parse tree
 	 */
@@ -123,6 +133,16 @@ public interface grmListener extends ParseTreeListener {
 	 */
 	void exitStatement(grmParser.StatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link grmParser#printStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrintStatement(grmParser.PrintStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link grmParser#printStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrintStatement(grmParser.PrintStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link grmParser#ifStatment}.
 	 * @param ctx the parse tree
 	 */
@@ -133,6 +153,16 @@ public interface grmListener extends ParseTreeListener {
 	 */
 	void exitIfStatment(grmParser.IfStatmentContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link grmParser#endif}.
+	 * @param ctx the parse tree
+	 */
+	void enterEndif(grmParser.EndifContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link grmParser#endif}.
+	 * @param ctx the parse tree
+	 */
+	void exitEndif(grmParser.EndifContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link grmParser#elseStatement}.
 	 * @param ctx the parse tree
 	 */
@@ -142,6 +172,16 @@ public interface grmListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitElseStatement(grmParser.ElseStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link grmParser#endElse}.
+	 * @param ctx the parse tree
+	 */
+	void enterEndElse(grmParser.EndElseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link grmParser#endElse}.
+	 * @param ctx the parse tree
+	 */
+	void exitEndElse(grmParser.EndElseContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link grmParser#whileStatement}.
 	 * @param ctx the parse tree

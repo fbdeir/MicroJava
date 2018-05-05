@@ -1,20 +1,20 @@
-0: put, IDENTIFIER, scope: 10, type: void[]
+0: main, IDENTIFIER, scope: 18, type: void[]
 
-1: x, IDENTIFIER, scope: 10, type: int[]
+1: main, IDENTIFIER, scope: 6, type: void[]
 
-2: Test2, TOK_PROGRAM, scope: 9, type: program[]
+2: found, IDENTIFIER, scope: 16, type: void[]
 
-3: main, IDENTIFIER, scope: 5, type: void[]
+3: i, IDENTIFIER, scope: 16, type: int[]
 
-4: main, IDENTIFIER, scope: 14, type: void[]
+4: found, IDENTIFIER, scope: 4, type: void[int]
 
-5: found, IDENTIFIER, scope: 3, type: void[]
+5: i, IDENTIFIER, scope: 4, type: int[]
 
-6: i, IDENTIFIER, scope: 3, type: int[]
+6: put, IDENTIFIER, scope: 13, type: void[]
 
-7: found, IDENTIFIER, scope: 12, type: void[int]
+7: x, IDENTIFIER, scope: 13, type: int[]
 
-8: i, IDENTIFIER, scope: 12, type: int[]
+8: Test2, TOK_PROGRAM, scope: 12, type: program[]
 
 9: put, IDENTIFIER, scope: 1, type: void[int]
 
