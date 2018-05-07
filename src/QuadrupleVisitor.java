@@ -1,3 +1,4 @@
+import com.sun.org.apache.xerces.internal.util.SymbolTable;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -44,6 +45,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
     }
     public void incrementTemp(){
         int temp=Integer.parseInt(_temp_count);
+        symbolTable.insert(new SymbolTableNode("tmp_"+_temp_count,"","",0,0));
         temp++;
         _temp_count=String.format("%04d", temp);
         tempct++;
@@ -51,6 +53,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
 
     public void incrementLablel(){
         int temp=Integer.parseInt(_lbl_count);
+        symbolTable.insert(new SymbolTableNode("lbl_"+_lbl_count,"","",0,0));
         temp++;
         _lbl_count=String.format("%04d", temp);
     }
@@ -224,6 +227,9 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
     }
     @Override
     public Void visitEof(grmParser.EofContext ctx) {
+        while(!endWhilelbl.isEmpty()){
+            quads.write("lbl_"+endWhilelbl.pop()+":");
+        }
         quads.write("li $v0, 10");
         quads.write("syscall");
         return super.visitEof(ctx);
@@ -262,6 +268,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             incrementLablel();
         }else if(op.equals("<=")){
             isEquals=1;
+            middle2=op2;
             String middle=getTemp(op1);
 
             if(middle.equals("")){
@@ -277,20 +284,28 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             quads.write("lbl_"+_lbl_count+":");
             whilelbl.push(_lbl_count);
             incrementLablel();
-            System.out.println("HELLO"+namesregs.size());
             for(int i=0; i<namesregs.size(); i++){
-                if(middle2.equals(namesregs.get(i)[0])){
-                    System.out.println("HELLO");
+                System.out.println(middle);
+                if(middle.equals(namesregs.get(i)[0])){
+                    System.out.println("HELLO"+namesregs.get(i)[1]);
                     middle1=namesregs.get(i)[1];
-                    quads.write("bge "+namesregs.get(i)[1]+ " "+middle2+" "+"lbl_"+_lbl_count+" while");
+                    if(middle2.charAt(0)=='$')
+                    quads.write("ble "+ middle2 +" "+namesregs.get(i)[1]+" "+"lbl_"+_lbl_count+" whileeee");
+                    else{
+                        quads.write("li $t"+tempct+", "+middle2);
+                        System.out.println("nammm "+namesregs.get(i)[1]);
+                        quads.write("ble $t"+tempct+" "+namesregs.get(i)[1]+" "+"lbl_"+_lbl_count+" while44");
+                        endWhilelbl.push(_lbl_count);
+                        incrementLablel();
+                    }
                     isFound=1;
                     incrementLablel();
                 }
             }
             if(isFound!=1){
-            quads.write("bge "+middle+ " "+middle2+" "+"lbl_"+_lbl_count+" while"); isFound=0;}
-            incrementLablel();
+            quads.write("ble "+middle+ " "+middle2+" "+"lbl_"+_lbl_count+" while"); isFound=0;}
             endWhilelbl.push(_lbl_count);
+            incrementLablel();;
         }else if(op.equals("<")){
             isEquals=1;
             islt=1;
@@ -439,8 +454,10 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
         try{
             String temp=ctx.parent.parent.parent.getChild(0).getText();
             if(temp.equals("while")){
-                if(isBgt!=1)
-                quads.write("ble "+middle1+" "+middle2+" lbl_"+whilelbl.pop());
+                if(isBgt!=1) {
+
+                    quads.write("ble " + middle1 + " " + middle2 + " lbl_" + whilelbl.pop());
+                }
                 else if(islt==1){
                     for(int i=0; i<namesregs.size(); i++){
                         if(middle1.equals(namesregs.get(i)[0])){
@@ -472,6 +489,10 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
                     quads.write("lbl_" + endWhilelbl.pop() + ":");
 
                 }catch(NullPointerException e){ }catch (EmptyStackException n){}
+            }else if((parser.ruleNames[ctx.parent.parent.getRuleIndex()].equals("block"))){
+                    while(!endWhilelbl.isEmpty()){
+                        quads.write("lbl_"+endWhilelbl.pop()+":");
+                    }
             }
             //quads.write("lbl_"+fallthroughlbl+":");
 

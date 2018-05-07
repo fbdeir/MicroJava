@@ -39,11 +39,12 @@ public class main  {
         semanticVisitor.visit(tree);
 
         QuadrupleVisitor quadrupleVisitor=new QuadrupleVisitor();
-        lexer.printSymbolTable();
         quadrupleVisitor.setSymbolTable(lexer.symbolTable);
         quadrupleVisitor.setParser(parser);
         quadrupleVisitor.setLexer(lexer);
         quadrupleVisitor.visit(tree);
+        lexer.printSymbolTable();
+
 
 
     }

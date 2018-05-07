@@ -268,13 +268,12 @@ public void printSymbolTable(){
  	                for(Integer i: keys){
  	                    SymbolTableNode n = (SymbolTableNode) symbolTable.SymbolHashTable().get(i);
  	                    while(n != null){
- 	                        if(n.isArray!=1){
+ 	                        if(n.scope<=3){
  		                    symbols.write(line+": "+n.name+", "+n.structure+", scope: "+n.scope+", type: "+n.type+Arrays.toString(n.parameters.toArray())+"\n");
- 		                    }else{
- 		                        symbols.write(line+": "+n.name+", "+n.structure+", scope: "+n.scope+", type: "+n.type+"[]"+Arrays.toString(n.parameters.toArray())+"\n");
+ 		                     line++;
  		                    }
  	                        n=n.child;
- 	                        line++;
+
  	                    }
  	                }
  				}

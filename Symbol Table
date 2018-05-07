@@ -1,80 +1,106 @@
-0: main, IDENTIFIER, scope: 9, type: void[]
+0: main, IDENTIFIER, scope: 1, type: void[]
 
-1: i, IDENTIFIER, scope: 9, type: int[]
+1: n, IDENTIFIER, scope: 1, type: int[]
 
-2: Test4, TOK_PROGRAM, scope: 8, type: program[]
+2: m, IDENTIFIER, scope: 1, type: int[]
 
-3: main, IDENTIFIER, scope: 1, type: void[]
+3: int, preloaded, scope: 0, type: int[]
 
-4: i, IDENTIFIER, scope: 1, type: int[]
+4: char, preloaded, scope: 0, type: char[]
 
-5: int, preloaded, scope: 0, type: int[]
+5: null, preloaded, scope: 0, type: null[]
 
-6: char, preloaded, scope: 0, type: char[]
+6: chr, preloaded, scope: 0, type: chr[]
 
-7: null, preloaded, scope: 0, type: null[]
+7: ord, preloaded, scope: 0, type: ord[]
 
-8: chr, preloaded, scope: 0, type: chr[]
+8: len, preloaded, scope: 0, type: len[]
 
-9: ord, preloaded, scope: 0, type: ord[]
+9: program, keyword, scope: 0, type: program[]
 
-10: len, preloaded, scope: 0, type: len[]
+10: class, keyword, scope: 0, type: class[]
 
-11: program, keyword, scope: 0, type: program[]
+11: if, keyword, scope: 0, type: if[]
 
-12: class, keyword, scope: 0, type: class[]
+12: else, keyword, scope: 0, type: else[]
 
-13: if, keyword, scope: 0, type: if[]
+13: while, keyword, scope: 0, type: while[]
 
-14: else, keyword, scope: 0, type: else[]
+14: read, keyword, scope: 0, type: read[]
 
-15: while, keyword, scope: 0, type: while[]
+15: print, keyword, scope: 0, type: print[]
 
-16: read, keyword, scope: 0, type: read[]
+16: return, keyword, scope: 0, type: return[]
 
-17: print, keyword, scope: 0, type: print[]
+17: void, keyword, scope: 0, type: void[]
 
-18: return, keyword, scope: 0, type: return[]
+18: final, keyword, scope: 0, type: final[]
 
-19: void, keyword, scope: 0, type: void[]
+19: new, keyword, scope: 0, type: new[]
 
-20: final, keyword, scope: 0, type: final[]
+20: Test8, TOK_PROGRAM, scope: 0, type: program[]
 
-21: new, keyword, scope: 0, type: new[]
+21: int, preloaded, scope: 0, type: int[]
 
-22: Test4, TOK_PROGRAM, scope: 0, type: program[]
+22: char, preloaded, scope: 0, type: char[]
 
-23: int, preloaded, scope: 0, type: int[]
+23: null, preloaded, scope: 0, type: null[]
 
-24: char, preloaded, scope: 0, type: char[]
+24: chr, preloaded, scope: 0, type: chr[]
 
-25: null, preloaded, scope: 0, type: null[]
+25: ord, preloaded, scope: 0, type: ord[]
 
-26: chr, preloaded, scope: 0, type: chr[]
+26: len, preloaded, scope: 0, type: len[]
 
-27: ord, preloaded, scope: 0, type: ord[]
+27: program, keyword, scope: 0, type: program[]
 
-28: len, preloaded, scope: 0, type: len[]
+28: class, keyword, scope: 0, type: class[]
 
-29: program, keyword, scope: 0, type: program[]
+29: if, keyword, scope: 0, type: if[]
 
-30: class, keyword, scope: 0, type: class[]
+30: else, keyword, scope: 0, type: else[]
 
-31: if, keyword, scope: 0, type: if[]
+31: while, keyword, scope: 0, type: while[]
 
-32: else, keyword, scope: 0, type: else[]
+32: read, keyword, scope: 0, type: read[]
 
-33: while, keyword, scope: 0, type: while[]
+33: print, keyword, scope: 0, type: print[]
 
-34: read, keyword, scope: 0, type: read[]
+34: return, keyword, scope: 0, type: return[]
 
-35: print, keyword, scope: 0, type: print[]
+35: void, keyword, scope: 0, type: void[]
 
-36: return, keyword, scope: 0, type: return[]
+36: final, keyword, scope: 0, type: final[]
 
-37: void, keyword, scope: 0, type: void[]
+37: new, keyword, scope: 0, type: new[]
 
-38: final, keyword, scope: 0, type: final[]
+38: lbl_0000, , scope: 0, type: []
 
-39: new, keyword, scope: 0, type: new[]
+39: lbl_0001, , scope: 0, type: []
+
+40: tmp_0000, , scope: 0, type: []
+
+41: tmp_0001, , scope: 0, type: []
+
+42: lbl_0002, , scope: 0, type: []
+
+43: lbl_0003, , scope: 0, type: []
+
+44: lbl_0004, , scope: 0, type: []
+
+45: lbl_0005, , scope: 0, type: []
+
+46: lbl_0006, , scope: 0, type: []
+
+47: tmp_0002, , scope: 0, type: []
+
+48: tmp_0003, , scope: 0, type: []
+
+49: lbl_0007, , scope: 0, type: []
+
+50: lbl_0008, , scope: 0, type: []
+
+51: lbl_0009, , scope: 0, type: []
+
+52: lbl_0010, , scope: 0, type: []
 
