@@ -21,9 +21,12 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
     int isEquals=0;
     int endIf=0;
     int endElse=0;
+    int isFound=0;
     String middle1="";
     String middle2="";
     String mainLabel="";
+    String condition="";
+    int isBgt=0;
     QuadWriter quads=new QuadWriter();
     int cCount=0;
     int iCount=0;
@@ -189,6 +192,16 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
         String op1=ctx.getChild(0).getText();
         String op2=ctx.getChild(2).getText();
         String op=ctx.getChild(1).getText();
+        if(op1.contains("%")){
+            String op11=op1.substring(0,op1.indexOf("%"));
+            String op22=op1.substring(op1.indexOf("%")+1);
+            quads.write("div\t\t"+ "$t"+tempct+", $t0"+  ",2 ");
+            quads.write("mfhi\t $t"+tempct);
+            condition="$t"+tempct;
+            incrementTemp();
+            quads.write("bne " + condition + " " + middle2 + " " + "lbl_" + _lbl_count + " if");
+            incrementLablel();
+        }
         if(op.equals("==")){
             tac.write("NEQI i"+iCount+" "+op1+" "+op2);
         }
@@ -224,7 +237,6 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             //System.out.println("middel2 "+middle2);
             this.middle2=middle2;
             if(!checkType(middle2).equals("char") && !checkType(middle2).equals("int"))
-
             op2="$t"+tempct;
             incrementTemp();
             quads.write("lbl_"+_lbl_count+":");
@@ -251,6 +263,36 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             whilelbl.push(_lbl_count);
             incrementLablel();
             quads.write("blt "+middle2+ " "+middle+" "+"lbl_"+_lbl_count+" while");
+            endWhilelbl.push(_lbl_count);
+            incrementLablel();
+        }else if(op.equals("<")){
+            isEquals=1;
+            String middle=getTemp(op1);
+            if(middle.equals("")){
+                middle=op1;
+            }
+            if(checkType(op1).equals("int")|| checkType(op1).equals("char"))
+                //load(checkType(op1), op1, middle);
+                op1="$t"+tempct;
+            incrementTemp();
+            String middle2=getTemp(op2);
+            op2="$t"+tempct;
+            incrementTemp();
+            quads.write("lbl_"+_lbl_count+":");
+            whilelbl.push(_lbl_count);
+            incrementLablel();
+
+            for(int i=0; i<namesregs.size(); i++){
+                if(middle.equals(namesregs.get(i)[0])){
+                    quads.write("bgt "+namesregs.get(i)[1]+ " "+middle2+" "+"lbl_"+_lbl_count+" while");
+                    isFound=1;
+                }
+            }
+            if(isFound!=1)
+            quads.write("bgt "+middle2+ " "+middle+" "+"lbl_"+_lbl_count+" while");
+            this.middle1=middle;
+            this.middle2=middle2;
+            isBgt=1;
             endWhilelbl.push(_lbl_count);
             incrementLablel();
         }
@@ -286,7 +328,9 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             incrementTemp();
             String middle2=getTemp(op2);op2="$t"+tempct;
             incrementTemp();
-            quads.write("bne "+middle+ " "+middle2+" "+"lbl_"+_lbl_count+" if");
+            if(!middle.contains("%")) {
+                quads.write("bne " + middle + " " + middle2 + " " + "lbl_" + _lbl_count + " if");
+            }
             elselbl=_lbl_count;
             incrementLablel();
         }else if(op.equals("<=")){
@@ -368,7 +412,12 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
         try{
             String temp=ctx.parent.parent.parent.getChild(0).getText();
             if(temp.equals("while")){
+                if(isBgt!=1)
                 quads.write("ble "+middle1+" "+middle2+" lbl_"+whilelbl.pop());
+                else {
+                    quads.write("blt "+middle1+" "+middle2+" lbl_"+whilelbl.pop());
+                    isBgt=0;
+                }
                 try {
                     quads.write("lbl_" + endWhilelbl.pop() + ":");
                 }catch(NullPointerException e){ }catch (EmptyStackException n){}
@@ -599,6 +648,9 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
         for (String s:
                 list)
         {
+            String[] t1=new String[2];
+            t1[0]=s;
+            t1[1]="$t"+tempct;
             SymbolTableNode n=null;
             Set<Integer> keys=symbolTable.SymbolHashTable().keySet();
             for(Integer i: keys){
@@ -607,6 +659,10 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
                     if(temp.name.equals(s)){
                         n=temp;
                         n.tempType="$t"+tempct;
+                        String[] temp2=new String[2];
+                        temp2[0]=s;
+                        temp2[1]="$t"+tempct;
+                        namesregs.add(temp2);
                         incrementTemp();
                         break;
                     }
@@ -619,6 +675,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
                 }
             }
         }
+
         localCount = 0;
         if(quads.tabs>0)
             quads.tabs--;
