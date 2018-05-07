@@ -448,10 +448,13 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
                     for(int i=0; i<methods.size(); i++){
 
                         if(methods.get(i).name.equals(currentMethod.peek())){
-                            System.out.println("params"+methods.get(i).parameters.get(0));
-                            t2=methods.get(i).parameters.get(0);
+                            if(methods.get(i).parameters.size()>0) {
+                                System.out.println("params" + methods.get(i).parameters.get(0));
+                                t2 = methods.get(i).parameters.get(0);
+                            }
                         }
                     }
+                    t2=temp;
 
                     quads.write("add $a0 "+t2+" 0");
                     System.out.println(Arrays.toString(namesregs.toArray()));

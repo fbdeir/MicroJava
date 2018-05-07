@@ -1,84 +1,30 @@
-x has already been defined at line15
-
-i has already been defined at line24
-
-max has already been defined at line28
-
-sieve has already been defined at line3
-
-max has already been defined at line4
-
-npp has already been defined at line5
-
-x has already been defined at line15
-
-i has already been defined at line24
-
-max has already been defined at line28
-
-Types are not equal10
-
-Types are not equal10
-
-Types are not equal10
-
-Types are not equal10
-
-Types are not equal11
-
 Types are not equal12
+
+Types are not equal14
+
+Types are not equal14
+
+Types are not equal16
 
 Types are not equal18
 
-Types are not equal19
+Types are not equal21
 
-Types are not equal20
+Types are not equal23
 
-Types are not equal20
+Types are not equal25
 
-Types are not equal20
+Types are not equal25
 
-Types are not equal20
+Types are not equal27
 
-Types are not equal20
-
-Types are not equal30
-
-Types are not equal30
-
-Types are not equal30
-
-Types are not equal30
+Types are not equal29
 
 Types are not equal32
 
-Types are not equal32
-
-Types are not equal33
-
-ready is not defined
-
-readyis not defined on line 34
-Types are not equal35
-
-ready is not defined
+Types are not equal34
 
 Types are not equal36
 
-Types are not equal36
+Types are not equal40
 
-ready is not defined
-
-readyis not defined on line 36
-jj Types are not equal37
-
-Types are not equal37
-
-ready is not defined
-
-readyis not defined on line 37
-Types are not equal38
-
-readyis not defined on line 34
-readyis not defined on line 36
-readyis not defined on line 37
