@@ -373,8 +373,7 @@ assign_helper:TOK_OP_ASSIGN expr;
 actPars: TOK_LP (expr (TOK_COMMA expr)*)? TOK_RP;
 condition: expr relop expr;
 relop: TOK_OP_REL;
-expr: (Minus)? term  (TOK_OP_ADD term)*;
-Minus: '-';
+expr:  term  (TOK_OP_ADD term)*;
 term: factor (TOK_OP_TIMES factor)*;
 factor: d
 | TOK_INTLIT
@@ -439,7 +438,7 @@ TOK_INVALID_IDENTIFIER: '_' TOK_IDENTIFIER
   | DIGIT TOK_IDENTIFIER ;
 TOK_IDENTIFIER : LETTER (LETTER|DIGIT)*;
 TOK_INVALID_CHARLIT: '\'' (TOK_CHARLIT)? ~('\'');
-TOK_CHARLIT: '\''(LETTER|DIGIT|'\\n'|'\\r'|'\\t')'\'';
+TOK_CHARLIT: '\''(LETTER|DIGIT|'\\n'|'\\r'|'\\t'|' ')'\'';
 UNRECOGNIZED_SYMBOL: . ;
 //fragments
 fragment LETTER: [a-zA-Z];
