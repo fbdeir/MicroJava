@@ -113,7 +113,6 @@ public class grmParser extends Parser {
 	public ATN getATN() { return _ATN; }
 
 
-	    QuadWriter quads=new QuadWriter();
 	    int cCount=1;
 	    int iCount=1;
 	    int aCount=1;

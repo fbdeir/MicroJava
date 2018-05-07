@@ -118,7 +118,11 @@ public class SemanticVisitor extends grmBaseVisitor<Void> {
         return super.visitEx(ctx);
     }
 
-
+    @Override
+    public Void visitActPars(grmParser.ActParsContext ctx) {
+        System.out.println(ctx.parent.getText());
+        return super.visitActPars(ctx);
+    }
 
     @Override
     public Void visitAssignment(grmParser.AssignmentContext ctx) {

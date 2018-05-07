@@ -4,7 +4,12 @@ public class QuadWriter {
     private static Writer quads= new Writer("mips.txt");
     public static int tabs=0;
     public static String waitString;
+    public QuadWriter(){
+        QuadWriter();
+    }
     public static Writer QuadWriter(){
+        quads.write(".data");
+        quads.write(".text");
         return quads;
     }
 

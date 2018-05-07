@@ -11,6 +11,7 @@ public class SymbolTableNode {
     public String tempType="";
     public int paramBegin=0;
     public int paramEnd=0;
+    public int returnRegister=-1;
     public ArrayList<String> parameters=new ArrayList<>();
     public SymbolTableNode(String name, String type, String structure, int isFinal, int scope, int isArray){
         this.name=name;

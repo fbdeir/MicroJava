@@ -286,7 +286,6 @@ import java.util.Stack;
 import java.util.Set;
 }
 @parser:: members{
-    QuadWriter quads=new QuadWriter();
     int cCount=1;
     int iCount=1;
     int aCount=1;
