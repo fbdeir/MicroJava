@@ -1,5 +1,5 @@
 public class   MIPSWriter {
-    private static Writer mips= new Writer("mips.txt");
+    private static Writer mips= new Writer("mips.asm");
 
     public static Writer QuadWriter(){
         return mips;

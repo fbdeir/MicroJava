@@ -1,106 +1,118 @@
 0: main, IDENTIFIER, scope: 1, type: void[]
 
-1: n, IDENTIFIER, scope: 1, type: int[]
+1: i, IDENTIFIER, scope: 1, type: int[]
 
-2: m, IDENTIFIER, scope: 1, type: int[]
+2: int, preloaded, scope: 0, type: int[]
 
-3: int, preloaded, scope: 0, type: int[]
+3: char, preloaded, scope: 0, type: char[]
 
-4: char, preloaded, scope: 0, type: char[]
+4: null, preloaded, scope: 0, type: null[]
 
-5: null, preloaded, scope: 0, type: null[]
+5: chr, preloaded, scope: 0, type: chr[]
 
-6: chr, preloaded, scope: 0, type: chr[]
+6: ord, preloaded, scope: 0, type: ord[]
 
-7: ord, preloaded, scope: 0, type: ord[]
+7: len, preloaded, scope: 0, type: len[]
 
-8: len, preloaded, scope: 0, type: len[]
+8: program, keyword, scope: 0, type: program[]
 
-9: program, keyword, scope: 0, type: program[]
+9: class, keyword, scope: 0, type: class[]
 
-10: class, keyword, scope: 0, type: class[]
+10: if, keyword, scope: 0, type: if[]
 
-11: if, keyword, scope: 0, type: if[]
+11: else, keyword, scope: 0, type: else[]
 
-12: else, keyword, scope: 0, type: else[]
+12: while, keyword, scope: 0, type: while[]
 
-13: while, keyword, scope: 0, type: while[]
+13: read, keyword, scope: 0, type: read[]
 
-14: read, keyword, scope: 0, type: read[]
+14: print, keyword, scope: 0, type: print[]
 
-15: print, keyword, scope: 0, type: print[]
+15: return, keyword, scope: 0, type: return[]
 
-16: return, keyword, scope: 0, type: return[]
+16: void, keyword, scope: 0, type: void[]
 
-17: void, keyword, scope: 0, type: void[]
+17: final, keyword, scope: 0, type: final[]
 
-18: final, keyword, scope: 0, type: final[]
+18: new, keyword, scope: 0, type: new[]
 
-19: new, keyword, scope: 0, type: new[]
+19: Test4, TOK_PROGRAM, scope: 0, type: program[]
 
-20: Test8, TOK_PROGRAM, scope: 0, type: program[]
+20: int, preloaded, scope: 0, type: int[]
 
-21: int, preloaded, scope: 0, type: int[]
+21: char, preloaded, scope: 0, type: char[]
 
-22: char, preloaded, scope: 0, type: char[]
+22: null, preloaded, scope: 0, type: null[]
 
-23: null, preloaded, scope: 0, type: null[]
+23: chr, preloaded, scope: 0, type: chr[]
 
-24: chr, preloaded, scope: 0, type: chr[]
+24: ord, preloaded, scope: 0, type: ord[]
 
-25: ord, preloaded, scope: 0, type: ord[]
+25: len, preloaded, scope: 0, type: len[]
 
-26: len, preloaded, scope: 0, type: len[]
+26: program, keyword, scope: 0, type: program[]
 
-27: program, keyword, scope: 0, type: program[]
+27: class, keyword, scope: 0, type: class[]
 
-28: class, keyword, scope: 0, type: class[]
+28: if, keyword, scope: 0, type: if[]
 
-29: if, keyword, scope: 0, type: if[]
+29: else, keyword, scope: 0, type: else[]
 
-30: else, keyword, scope: 0, type: else[]
+30: while, keyword, scope: 0, type: while[]
 
-31: while, keyword, scope: 0, type: while[]
+31: read, keyword, scope: 0, type: read[]
 
-32: read, keyword, scope: 0, type: read[]
+32: print, keyword, scope: 0, type: print[]
 
-33: print, keyword, scope: 0, type: print[]
+33: return, keyword, scope: 0, type: return[]
 
-34: return, keyword, scope: 0, type: return[]
+34: void, keyword, scope: 0, type: void[]
 
-35: void, keyword, scope: 0, type: void[]
+35: final, keyword, scope: 0, type: final[]
 
-36: final, keyword, scope: 0, type: final[]
+36: new, keyword, scope: 0, type: new[]
 
-37: new, keyword, scope: 0, type: new[]
+37: lbl_0000, , scope: 0, type: []
 
-38: lbl_0000, , scope: 0, type: []
+38: lbl_0001, , scope: 0, type: []
 
-39: lbl_0001, , scope: 0, type: []
+39: tmp_0000, , scope: 0, type: []
 
-40: tmp_0000, , scope: 0, type: []
+40: tmp_0001, , scope: 0, type: []
 
-41: tmp_0001, , scope: 0, type: []
+41: lbl_0002, , scope: 0, type: []
 
-42: lbl_0002, , scope: 0, type: []
+42: lbl_0003, , scope: 0, type: []
 
-43: lbl_0003, , scope: 0, type: []
+43: tmp_0002, , scope: 0, type: []
 
-44: lbl_0004, , scope: 0, type: []
+44: tmp_0003, , scope: 0, type: []
 
-45: lbl_0005, , scope: 0, type: []
+45: tmp_0004, , scope: 0, type: []
 
-46: lbl_0006, , scope: 0, type: []
+46: lbl_0004, , scope: 0, type: []
 
-47: tmp_0002, , scope: 0, type: []
+47: lbl_0005, , scope: 0, type: []
 
-48: tmp_0003, , scope: 0, type: []
+48: tmp_0005, , scope: 0, type: []
 
-49: lbl_0007, , scope: 0, type: []
+49: tmp_0006, , scope: 0, type: []
 
-50: lbl_0008, , scope: 0, type: []
+50: lbl_0006, , scope: 0, type: []
 
-51: lbl_0009, , scope: 0, type: []
+51: lbl_0007, , scope: 0, type: []
 
-52: lbl_0010, , scope: 0, type: []
+52: tmp_0007, , scope: 0, type: []
+
+53: lbl_0008, , scope: 0, type: []
+
+54: tmp_0008, , scope: 0, type: []
+
+55: tmp_0009, , scope: 0, type: []
+
+56: lbl_0009, , scope: 0, type: []
+
+57: lbl_0010, , scope: 0, type: []
+
+58: lbl_0011, , scope: 0, type: []
 

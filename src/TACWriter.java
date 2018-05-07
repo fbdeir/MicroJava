@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class TACWriter {
-    private static Writer quads= new Writer("tac.txt");
+    private static Writer quads= new Writer("tac.asm");
     public static int tabs=0;
     public static String waitString;
     public TACWriter(){

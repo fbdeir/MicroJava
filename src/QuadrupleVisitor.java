@@ -104,7 +104,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
                         quads.write("li "+n.parameters.get(i)+", "+params.substring(0, params.indexOf(",")));
                     else
                         quads.write("li "+n.parameters.get(i)+", "+params);
-                        if(params.contains(","))
+                    if(params.contains(","))
                         params=params.substring(params.indexOf(",")+1);
 
                 }
@@ -203,7 +203,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             quads.write("mfhi\t $t"+tempct);
             condition="$t"+tempct;
             incrementTemp();
-            quads.write("beq " + condition + " " + middle2 + " " + "lbl_" + _lbl_count + " if");
+            quads.write("beq " + condition + " " + middle2 + " " + "lbl_" + _lbl_count );
             elselbl=_lbl_count;
             incrementLablel();
 
@@ -216,7 +216,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             condition="$t"+tempct;
             incrementTemp();
 
-            quads.write("bne " + condition + " " + middle2 + " " + "lbl_" + _lbl_count + " if");
+            quads.write("bne " + condition + " " + middle2 + " " + "lbl_" + _lbl_count );
             elselbl=_lbl_count;
             incrementLablel();
         }
@@ -251,19 +251,19 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             }
             middle1=middle;
             if(checkType(op1).equals("int")|| checkType(op1).equals("char"))
-               // load(checkType(op1), op1, middle);
-            op1="$t"+tempct;
+                // load(checkType(op1), op1, middle);
+                op1="$t"+tempct;
             incrementTemp();
             String middle2=getTemp(op2);
             //System.out.println("middel2 "+middle2);
             this.middle2=middle2;
             if(!checkType(middle2).equals("char") && !checkType(middle2).equals("int"))
-            op2="$t"+tempct;
+                op2="$t"+tempct;
             incrementTemp();
             quads.write("lbl_"+_lbl_count+":");
             whilelbl.push(_lbl_count);
             incrementLablel();
-            quads.write("bne "+middle+ " "+middle2+" "+"lbl_"+_lbl_count+" while");
+            quads.write("bne "+middle+ " "+middle2+" "+"lbl_"+_lbl_count);
             endWhilelbl.push(_lbl_count);
             incrementLablel();
         }else if(op.equals("<=")){
@@ -276,7 +276,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             }
             if(checkType(op1).equals("int")|| checkType(op1).equals("char"))
                 //load(checkType(op1), op1, middle);
-            op1="$t"+tempct;
+                op1="$t"+tempct;
             incrementTemp();
             String middle2=getTemp(op2);
             op2="$t"+tempct;
@@ -290,7 +290,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
                     System.out.println("HELLO"+namesregs.get(i)[1]);
                     middle1=namesregs.get(i)[1];
                     if(middle2.charAt(0)=='$')
-                    quads.write("ble "+ middle2 +" "+namesregs.get(i)[1]+" "+"lbl_"+_lbl_count+" whileeee");
+                        quads.write("ble "+ middle2 +" "+namesregs.get(i)[1]+" "+"lbl_"+_lbl_count+" whileeee");
                     else{
                         quads.write("li $t"+tempct+", "+middle2);
                         System.out.println("nammm "+namesregs.get(i)[1]);
@@ -303,7 +303,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
                 }
             }
             if(isFound!=1){
-            quads.write("ble "+middle+ " "+middle2+" "+"lbl_"+_lbl_count+" while"); isFound=0;}
+                quads.write("ble "+middle+ " "+middle2+" "+"lbl_"+_lbl_count); isFound=0;}
             endWhilelbl.push(_lbl_count);
             incrementLablel();;
         }else if(op.equals("<")){
@@ -326,12 +326,12 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
 
             for(int i=0; i<namesregs.size(); i++){
                 if(middle.equals(namesregs.get(i)[0])){
-                    quads.write("bgt "+namesregs.get(i)[1]+ " "+middle2+" "+"lbl_"+_lbl_count+" while");
+                    quads.write("bgt "+namesregs.get(i)[1]+ " "+middle2+" "+"lbl_"+_lbl_count);
                     isFound=1;
                 }
             }
             if(isFound!=1)
-            quads.write("bgt "+middle2+ " "+middle+" "+"lbl_"+_lbl_count+" while");
+                quads.write("bgt "+middle2+ " "+middle+" "+"lbl_"+_lbl_count);
             this.middle1=middle;
             this.middle2=middle2;
             isBgt=1;
@@ -371,7 +371,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             String middle2=getTemp(op2);op2="$t"+tempct;
             incrementTemp();
             if(!middle.contains("%")) {
-                quads.write("bne " + middle1 + " " + middle2 + " " + "lbl_" + _lbl_count + " if");
+                quads.write("bne " + middle1 + " " + middle2 + " " + "lbl_" + _lbl_count );
                 elselbl=_lbl_count;
                 incrementLablel();
 
@@ -383,7 +383,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             incrementTemp();
             String middle2=getTemp(op2);
             op2="$t"+tempct;
-            quads.write("ble "+middle+" "+middle2+"lbl_"+_lbl_count+" if");
+            quads.write("ble "+middle+" "+middle2+"lbl_"+_lbl_count);
             elselbl=_lbl_count;
             incrementTemp();
         }else if(op.equals(">")){
@@ -394,7 +394,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
             String middle2=getTemp(op2);
             op2="$t"+tempct;
             incrementTemp();
-            quads.write("blt "+op1+" "+op2+" _lbl_"+_lbl_count+" if");
+            quads.write("blt "+op1+" "+op2+" _lbl_"+_lbl_count);
             elselbl=_lbl_count;
             incrementLablel();
         }
@@ -462,7 +462,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
                     for(int i=0; i<namesregs.size(); i++){
                         if(middle1.equals(namesregs.get(i)[0])){
                             middle1=namesregs.get(i)[1];
-                            quads.write("bgt "+namesregs.get(i)[1]+ " "+middle2+" "+"lbl_"+_lbl_count+" while");
+                            quads.write("bgt "+namesregs.get(i)[1]+ " "+middle2+" "+"lbl_"+_lbl_count);
                             isFound=1;
                         }
                     }
@@ -475,7 +475,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
                     for(int i=0; i<namesregs.size(); i++){
                         if(middle1.equals(namesregs.get(i)[0])){
                             middle1=namesregs.get(i)[1];
-                            quads.write("blt "+namesregs.get(i)[1]+ " "+middle2+" "+"lbl_"+_lbl_count+" while");
+                            quads.write("blt "+namesregs.get(i)[1]+ " "+middle2+" "+"lbl_"+_lbl_count);
                             isFound=1;
                         }
                     }
@@ -490,9 +490,9 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
 
                 }catch(NullPointerException e){ }catch (EmptyStackException n){}
             }else if((parser.ruleNames[ctx.parent.parent.getRuleIndex()].equals("block"))){
-                    while(!endWhilelbl.isEmpty()){
-                        quads.write("lbl_"+endWhilelbl.pop()+":");
-                    }
+                while(!endWhilelbl.isEmpty()){
+                    quads.write("lbl_"+endWhilelbl.pop()+":");
+                }
             }
             //quads.write("lbl_"+fallthroughlbl+":");
 
@@ -696,7 +696,7 @@ public class QuadrupleVisitor extends grmBaseVisitor<Void> {
                 isEquals = 1;
                 //last instruction of else
                 //quads.write("_lbl_"+elselbl+" ruleelse");
-                quads.write("bne "+middle1+ " "+middle2+" "+"lbl_"+fallthroughlbl+" while");
+                quads.write("bne "+middle1+ " "+middle2+" "+"lbl_"+fallthroughlbl);
                 incrementLablel();
             }
             childCount++;

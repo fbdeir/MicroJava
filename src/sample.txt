@@ -1,29 +1,43 @@
-//Nested loops
-//Print the table of multiplication
-program Test8
-{
+//Print even numbers (while loop, modulos, condition)
+ //Print odd numbers (while loop, modulos, condition)
+ //Check if variable i is equal to 100
 
-	void main()
-		int n;
-		int m;
-	{
-		n = 1;
+ program Test4
+ 	{
 
-		while(n <= 10)
-		{
-			m = 1;
+ 		void main()
+ 			int i;
+ 		{
+ 			i = 0;
+ 			while(i < 100)
+ 			{
+ 				if(i%2 == 0)
+ 				{
+ 					print(i);
+ 				}
+ 				i = i + 1;
+ 			}
 
-			while(m <= 10)
-			{
-				print(n * m);
-				print(' ');
-				m = m + 1;
-			}
-			n = n + 1;
+ 			print('\n');
+ 			i = 0;
+ 			while(i < 100)
+ 			{
+ 				if(i%2 != 0)
+ 				{
+ 					print(i);
+ 				}
+ 				i = i + 1;
+ 			}
 
-			print('\n');
-		}
-	}
+ 			print('\n');
 
-
-}
+ 			if (i == 100)
+ 			{
+ 				print('y');
+ 			}
+ 			else
+ 			{
+ 				print('n');
+ 			}
+ 		}
+ 	}
